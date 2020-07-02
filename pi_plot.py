@@ -29,8 +29,9 @@ DEFAULT_CONFIG = {
         'incr_dist': 1.0
         },
     'indiv_plotter': {
-        'file_location': "pact_scans/graph_scans/scan_0.csv"
-        },
+        'file_location': "pact_scans/graph_scans/scan_0.csv",
+        'plot_title': "Box and Whiskers Plot of RSSI Values"
+        }
     }
 
 BEST_FIT_LIMITS = [-1, 5]
@@ -176,7 +177,7 @@ class Indiv_Plot(object):
         fig1, ax = plt.subplots()
         ax.boxplot(scan_values, vert=False, meanline=True, showmeans=True, meanprops={'linewidth':2.5, 'color':'red'}, medianprops={'linestyle':'None'})
 
-        ax.set_title("Box and Whiskers Plot of RSSI Values")
+        ax.set_title(self.plot_title)
         ax.set_xlabel('RSSI Values')        
             
         y = [1] * len(scan_values)
@@ -257,7 +258,8 @@ def parse_args(args):
     parser.add_argument('--config_yml', help="Configuration YAML.")
     parser.add_argument('--file_location', help="Path to file")
     parser.add_argument('--scan_prefix', help="Prefix to numbered file (file should be scan_prefix#.csv)")
-    parser.add_argument('--graph_title', help="Title of resulting graph")
+    parser.add_argument('--graph_title', help="Title of resulting Graph")
+    parser.add_argument('--plot_title', help="Title of resulting Plot")
     parser.add_argument('--x_label', help="Label for y axis")
     parser.add_argument('--y_label', help="Label for x axis")
     parser.add_argument('--best_fit', type=int,

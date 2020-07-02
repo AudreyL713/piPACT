@@ -10,3 +10,5 @@ all_grapher:
 
 indiv_plotter:
   file_location: "pact_scans/graph_scans/scan_0.csv"
+  plot_title: "Box and Whiskers Plot of RSSI Values"
+
