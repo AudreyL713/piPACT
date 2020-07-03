@@ -607,25 +607,15 @@ class Scanner(object):
         return advertisements
 
 class Scanner_Blank(object):
-    """Instantiates a BLE beacon scanner.
+    """.
 
     Attributes:
-        control_file (pathlib.Path): BLE beacon scanner control file path.
-        timeout (float, int): BLE beacon scanner timeout (s). Must be strictly
-            positive and less than 600.
-        revisit (int): BLE beacon scanner revisit interval (s). Must be
-            strictly positive.
-        filters (dict): Filters to apply to received beacons. Available
-            filters/keys are {'address', 'uuid', 'major', 'minor'}.
     """
 
     def __init__(self, control_file_name="scanner_control"):
         """Instance initialization.
 
         Args:
-            logger (logging.Logger): Configured logger.
-            **kwargs: Keyword arguments corresponding to instance attributes.
-                Any unassociated keyword arguments are ignored.
         """
         # Create beacon
         self.__service = BeaconService(BLE_DEVICE)
@@ -644,6 +634,7 @@ class Scanner_Blank(object):
         data = None
         scan_count = 0
         start_time = time.monotonic()
+        
         while run:
             scan_count += 1
             timestamps.append(datetime.now())
@@ -654,10 +645,9 @@ class Scanner_Blank(object):
             print(data)
             if data is not None:
                 run = False
-                print("Data Saved")
             if control_flag != "0":
                 run = False
-                print("control flag")
+
         # Cleanup
         for address, payload in list(data.items()):
             advertisement = {'ADDRESS': address}
