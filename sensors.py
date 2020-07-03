@@ -2,7 +2,7 @@
 from time import sleep, strftime, time
 from csv import writer
 import pi_pact
-import board
+# import board
 import dht
 import bmp
 import statistics
