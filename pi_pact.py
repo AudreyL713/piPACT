@@ -642,7 +642,7 @@ class Scanner_Blank(object):
             # Stop advertising based on either timeout or control file
             self.__control_file_handle.seek(0)
             control_flag = self.__control_file_handle.read()
-            print(data)
+            # print(data)
             if data is not None:
                 run = False
             if control_flag != "0":
