@@ -619,7 +619,7 @@ class Scanner_Blank(object):
             filters/keys are {'address', 'uuid', 'major', 'minor'}.
     """
 
-    def __init__(self, control_file="scanner_control"):
+    def __init__(self, control_file_name="scanner_control"):
         """Instance initialization.
 
         Args:
@@ -629,7 +629,13 @@ class Scanner_Blank(object):
         """
         # Create beacon
         self.__service = BeaconService(BLE_DEVICE)
-        self.__control_file = control_file
+
+        self.__control_file = Path(control_file_name).resolve()
+        self.__control_file.touch()
+        self.__control_file.chmod(0o777)
+        with self.__control_file.open(mode='w') as f:
+            f.write("0")
+        self.__control_file_handle = None
 
     def return_RSSI(self):
         self.__control_file_handle = self.__control_file.open(mode='r+')
