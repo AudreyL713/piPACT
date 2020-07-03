@@ -3,8 +3,8 @@ from time import sleep, strftime, time
 from csv import writer
 import pi_pact
 # import board
-import dht
-import bmp
+# import dht
+# import bmp
 import statistics
 
 # Initial the dht device, with data pin connected to:
