@@ -652,7 +652,7 @@ class Scanner_Blank(object):
         for address, payload in list(data.items()):
             advertisement = {'ADDRESS': address}
             advertisement['RSSI'] = payload[4]
-        return advertisement
+        return advertisement['RSSI']
 
 def setup_logger(config):
     """Setup and return logger based on configuration."""

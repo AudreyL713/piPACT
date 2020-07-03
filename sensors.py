@@ -9,11 +9,12 @@ import statistics
 # Initial the dht device, with data pin connected to:
 hSensor = dht.DHT11(board.D18)
 pSensor = bmp.BMP085()
-scanner = pi_pact.Scanner
+scanner = pi_pact.Scanner_Blank(control_file_name="scanner_control")
 
 humidityList = list()
 temperatureList = list()
 pressureList = list()
+rssiList = list()
 
 def write_data(val1, val2, val3):
     with open("/home/pi/Documents/log.csv", "a") as log:
@@ -21,11 +22,13 @@ def write_data(val1, val2, val3):
 
 while True:
     for i in range(10):
+        rssiList.append(scanner.return_RSSI())
         humidityList.append(hSensor.humidity())
         temperatureList.append(pSensor.read_temperature())
         pressureList.append(pSensor.read_pressure())
-        print(temperatureList)
+        print(rssiList)
         print(humidityList)
+        print(temperatureList)
         print(pressureList)
         print()
         sleep(2.0)
