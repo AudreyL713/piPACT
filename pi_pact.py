@@ -534,13 +534,6 @@ class Scanner(object):
         return  pd.DataFrame(advertisements,columns=['ADDRESS', 'TIMESTAMP',
             'UUID', 'MAJOR', 'MINOR', 'TX POWER', 'RSSI'])
 
-    def nameScanLogs(self):
-        latestNum = self.curr_file_id
-        for file in os.listdir("~/reference_code"):
-            if file.endswith(".csv"):
-                print(os.path.join("", file))
-        return None
-
     def scan(self, scan_prefix='', timeout=0, revisit=1, curr_file_id=0):
         """Execute BLE beacon scan.
 
@@ -612,6 +605,56 @@ class Scanner(object):
         advertisements = self.filter_advertisements(advertisements)
         advertisements.to_csv(scan_file, index_label='SCAN')
         return advertisements
+
+class Scanner_Blank(object):
+    """Instantiates a BLE beacon scanner.
+
+    Attributes:
+        control_file (pathlib.Path): BLE beacon scanner control file path.
+        timeout (float, int): BLE beacon scanner timeout (s). Must be strictly
+            positive and less than 600.
+        revisit (int): BLE beacon scanner revisit interval (s). Must be
+            strictly positive.
+        filters (dict): Filters to apply to received beacons. Available
+            filters/keys are {'address', 'uuid', 'major', 'minor'}.
+    """
+
+    def __init__(self, control_file="scanner_control"):
+        """Instance initialization.
+
+        Args:
+            logger (logging.Logger): Configured logger.
+            **kwargs: Keyword arguments corresponding to instance attributes.
+                Any unassociated keyword arguments are ignored.
+        """
+        # Create beacon
+        self.__service = BeaconService(BLE_DEVICE)
+        self.__control_file = control_file
+
+    def return_RSSI(self):
+        self.__control_file_handle = self.__control_file.open(mode='r+')
+        run = True
+        timestamps = []
+        scans = []
+        scan_count = 0
+        start_time = time.monotonic()
+        while run:
+            scan_count += 1
+            timestamps.append(datetime.now())
+            scans.append(self.__service.scan(self.revisit))
+            # Stop advertising based on either timeout or control file
+            self.__control_file_handle.seek(0)
+            control_flag = self.__control_file_handle.read()
+            if len(scans) != 0:
+                run = False
+            if control_flag != "0":
+                run = False
+        # Cleanup
+        rssi = scans[0]
+        for address, payload in rssi:
+            advertisement = {'ADDRESS': address}
+            advertisement['RSSI'] = payload[4]
+        return advertisement
 
 def setup_logger(config):
     """Setup and return logger based on configuration."""
