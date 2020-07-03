@@ -641,27 +641,25 @@ class Scanner_Blank(object):
         self.__control_file_handle = self.__control_file.open(mode='r+')
         run = True
         timestamps = []
-        scans = []
+        data = None
         scan_count = 0
         start_time = time.monotonic()
         while run:
             scan_count += 1
             timestamps.append(datetime.now())
-            scans.append(self.__service.scan(1))
+            data = self.__service.scan(1)
             # Stop advertising based on either timeout or control file
             self.__control_file_handle.seek(0)
             control_flag = self.__control_file_handle.read()
-            print(scans[-1])
-            if bool(scans[-1]):
+            print(data)
+            if data is not None:
                 run = False
-                print(scans[-1])
+                print("Data Saved")
             if control_flag != "0":
                 run = False
                 print("control flag")
         # Cleanup
-        rssi = scans[0]
-        print(rssi)
-        for address, payload in rssi:
+        for address, payload in list(data.items()):
             advertisement = {'ADDRESS': address}
             advertisement['RSSI'] = payload[4]
         return advertisement
