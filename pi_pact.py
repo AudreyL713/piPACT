@@ -629,6 +629,7 @@ class Scanner_Blank(object):
         """
         # Create beacon
         self.__service = BeaconService(BLE_DEVICE)
+        self.revisit = 1
 
         self.__control_file = Path(control_file_name).resolve()
         self.__control_file.touch()
