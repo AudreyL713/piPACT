@@ -629,7 +629,6 @@ class Scanner_Blank(object):
         """
         # Create beacon
         self.__service = BeaconService(BLE_DEVICE)
-        self.revisit = 1
 
         self.__control_file = Path(control_file_name).resolve()
         self.__control_file.touch()
@@ -648,16 +647,20 @@ class Scanner_Blank(object):
         while run:
             scan_count += 1
             timestamps.append(datetime.now())
-            scans.append(self.__service.scan(self.revisit))
+            scans.append(self.__service.scan(1))
             # Stop advertising based on either timeout or control file
             self.__control_file_handle.seek(0)
             control_flag = self.__control_file_handle.read()
-            if len(scans) != 0:
+            print(scans[-1])
+            if bool(scans[-1]):
                 run = False
+                print(scans[-1])
             if control_flag != "0":
                 run = False
+                print("control flag")
         # Cleanup
         rssi = scans[0]
+        print(rssi)
         for address, payload in rssi:
             advertisement = {'ADDRESS': address}
             advertisement['RSSI'] = payload[4]
