@@ -19,7 +19,7 @@ rssiList = list()
 
 def write_data(data_list):
     # with open("/home/pi/Documents/log.csv", "a+" newline='') as log:
-    with open("/home/aud2pact/piPACT/pact_scans/log.csv", "a+" newline='') as log:
+    with open("/home/aud2pact/piPACT/pact_scans/log.csv", "a+", newline='') as log:
         csv_writer = writer(log)
         csv_writer.writerow(data_list)
         # log.write("{0},{1},{2},{3}\n".format(strftime("%Y-%m-%d %H:%M:%S"), str(val1), str(val2), str(val3)))
