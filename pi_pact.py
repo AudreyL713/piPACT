@@ -647,6 +647,11 @@ class Scanner_Blank(object):
                 run = False
             if control_flag != "0":
                 run = False
+            if (time.monotonic()-start_time) > 5.0:
+                print("Beacon scanner timed out.")
+                return ()
+                run = False
+
 
         # Cleanup
         for address, payload in list(data.items()):
