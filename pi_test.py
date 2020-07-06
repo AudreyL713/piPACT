@@ -727,7 +727,7 @@ class Test_Scanner(object):
                 advertisements.append(advertisement)
         # Format into DataFrame
         return  pd.DataFrame(advertisements,columns=['ADDRESS', 'TIMESTAMP',
-            'TX POWER', 'RSSI'])#, 'TEMP', 'HUMIDITY', 'PRESSURE'])
+            'TX POWER', 'RSSI', 'TEMP', 'HUMIDITY', 'PRESSURE'])
 
 
     def scan(self, scan_prefix='', timeout=0, revisit=1, curr_file_id=0):
