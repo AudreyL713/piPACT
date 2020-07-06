@@ -23,7 +23,6 @@ import time
 from uuid import uuid1
 import yaml
 
-from time import sleep, strftime, time
 from csv import writer
 import pi_pact
 import board
@@ -959,7 +958,7 @@ def main(args):
             bme280.overscan_pressure = adafruit_bme280.OVERSCAN_X16
             bme280.overscan_humidity = adafruit_bme280.OVERSCAN_X1
             bme280.overscan_temperature = adafruit_bme280.OVERSCAN_X2
-            sleep(1)
+            time.sleep(1)
 
             advertiser = Advertiser(**config['advertiser'])
             scanner = Test_Scanner(bme280, **config['test_scanner'])
