@@ -972,6 +972,7 @@ def main(args):
 
             advertiser_run.join()
             scanner_run.join()
+            output = advertisements
 
 
     except Exception:
