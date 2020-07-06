@@ -720,9 +720,10 @@ class Test_Scanner(object):
                 advertisement = {'ADDRESS': address, 'TIMESTAMP': timestamp}
                 advertisement['TX POWER'] = payload[3]
                 advertisement['RSSI'] = payload[4]
-                # advertisement['TEMP'] = payload[5]
-                # advertisement['HUMIDITY'] = payload[6]
-                # advertisement['PRESSURE'] = payload[7]
+                if len(payload) > 5:
+                    advertisement['TEMP'] = payload[5][0]
+                    advertisement['HUMIDITY'] = payload[5][1]
+                    advertisement['PRESSURE'] = payload[5][2]
                 advertisements.append(advertisement)
         # Format into DataFrame
         return  pd.DataFrame(advertisements,columns=['ADDRESS', 'TIMESTAMP',
@@ -793,10 +794,7 @@ class Test_Scanner(object):
                 payload = list(data[key])
                 payload.append(weather_data)
                 print(payload)
-                data[key] = payload.append(weather_data)
-            # data.append(self.__bme280.temperature)
-            # data.append(self.__bme280.humidity)
-            # data.append(self.__bme280.pressure)
+                data[key] = payload
             scans.append(data)
 
             # Stop advertising based on either timeout or control file
