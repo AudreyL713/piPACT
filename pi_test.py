@@ -716,17 +716,18 @@ class Test_Scanner(object):
         # Collect all advertisements
         advertisements = []
         for (scan, timestamp) in zip_longest(scans, timestamps):
+            print(scan)
             for address, payload in scan.items():
                 advertisement = {'ADDRESS': address, 'TIMESTAMP': timestamp}
                 advertisement['TX POWER'] = payload[3]
                 advertisement['RSSI'] = payload[4]
-                advertisement['TEMP'] = payload[5]
-                advertisement['HUMIDITY'] = payload[6]
-                advertisement['PRESSURE'] = payload[7]
+                # advertisement['TEMP'] = payload[5]
+                # advertisement['HUMIDITY'] = payload[6]
+                # advertisement['PRESSURE'] = payload[7]
                 advertisements.append(advertisement)
         # Format into DataFrame
         return  pd.DataFrame(advertisements,columns=['ADDRESS', 'TIMESTAMP',
-            'TX POWER', 'RSSI', 'TEMP', 'HUMIDITY', 'PRESSURE'])
+            'TX POWER', 'RSSI'])#, 'TEMP', 'HUMIDITY', 'PRESSURE'])
 
 
     def scan(self, scan_prefix='', timeout=0, revisit=1, curr_file_id=0):
@@ -785,9 +786,9 @@ class Test_Scanner(object):
             timestamps.append(datetime.now())
 
             data = self.__service.scan(self.revisit)
-            data.append(self.__bme280.temperature)
-            data.append(self.__bme280.humidity)
-            data.append(self.__bme280.pressure)
+            # data.append(self.__bme280.temperature)
+            # data.append(self.__bme280.humidity)
+            # data.append(self.__bme280.pressure)
             scans.append(data)
 
             # Stop advertising based on either timeout or control file
