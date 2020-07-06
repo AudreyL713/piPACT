@@ -790,8 +790,10 @@ class Test_Scanner(object):
                 key = keys[0]
                 weather_data = [self.__bme280.temperature, self.__bme280.humidity, self.__bme280.pressure]
                 print(weather_data)
-                print(list(data[key]))
-                data[key] = list(data[key]).append(weather_data)
+                payload = list(data[key])
+                new = payload.append(weather_data)
+                print(new)
+                data[key] = payload.append(weather_data)
             # data.append(self.__bme280.temperature)
             # data.append(self.__bme280.humidity)
             # data.append(self.__bme280.pressure)
