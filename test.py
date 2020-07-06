@@ -16,6 +16,23 @@ bme280.overscan_pressure = adafruit_bme280.OVERSCAN_X16
 bme280.overscan_humidity = adafruit_bme280.OVERSCAN_X1
 bme280.overscan_temperature = adafruit_bme280.OVERSCAN_X2
 
+sleep(1)
+
 # scanner = pi_pact.Scanner_Blank(control_file_name="scanner_control")
 
-print(bme280.temperature)
+while(True):
+    temps = list()
+    hums = list()
+    pres = list()
+    for i in range(20):
+        temps.append(bme280.temperature)
+        hums.append(bme280.humidity)
+        pres.append(bme280.pressure)
+    
+    avg_temps = sum(temps) / len(temps)
+    avg_hums = sum(hums) / len(hums)
+    avg_pres = sum(pres) / len(pres)
+
+    print("Temperature: " + str(avg_temps))
+    print("Humidity: " + str(avg_hums))
+    print("Pressure: " + str(avg_pres))
