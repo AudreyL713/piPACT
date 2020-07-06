@@ -715,7 +715,7 @@ class Test_Scanner(object):
         # Collect all advertisements
         advertisements = []
         for (scan, timestamp) in zip_longest(scans, timestamps):
-            print(scan)
+            # print(scan)
             for address, payload in scan.items():
                 advertisement = {'ADDRESS': address, 'TIMESTAMP': timestamp}
                 advertisement['TX POWER'] = payload[3]
@@ -785,6 +785,8 @@ class Test_Scanner(object):
             timestamps.append(datetime.now())
 
             data = self.__service.scan(self.revisit)
+            print(data.items())
+            weather_data = [self.__bme280.temperature, self.__bme280.humidity, self.__bme280.pressure]
             # data.append(self.__bme280.temperature)
             # data.append(self.__bme280.humidity)
             # data.append(self.__bme280.pressure)
