@@ -788,8 +788,9 @@ class Test_Scanner(object):
             keys = list(data.keys())
             if bool(keys):
                 key = keys[0]
-                print(key)
                 weather_data = [self.__bme280.temperature, self.__bme280.humidity, self.__bme280.pressure]
+                print(weather_data)
+                print(list(data[key]))
                 data[key] = list(data[key]).append(weather_data)
             # data.append(self.__bme280.temperature)
             # data.append(self.__bme280.humidity)
