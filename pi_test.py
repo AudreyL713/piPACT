@@ -975,9 +975,7 @@ def main(args):
 
 
     except Exception:
-        logger.exception("Fatal exception encountered")
-    finally:
-        close_logger(logger)
+        print("Fatal exception encountered")
     return output
 
 if __name__ == "__main__":
