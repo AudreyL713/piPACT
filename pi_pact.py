@@ -634,7 +634,7 @@ class Scanner_Blank(object):
         data = None
         scan_count = 0
         start_time = time.monotonic()
-        
+
         while run:
             scan_count += 1
             timestamps.append(datetime.now())
@@ -759,7 +759,7 @@ def main(args):
         then scanned advertisements are returned in pandas.DataFrame.
     """
     # Initial setup
-    
+
     parsed_args = parse_args(args)
     config = load_config(parsed_args)
     logger = setup_logger(config['logger'])
@@ -781,7 +781,7 @@ def main(args):
             output = advertisements
         elif parsed_args['both']:
             logger.info("Beacon simultaneous advertiser and scanner mode selected.")
-            
+
             advertiser = Advertiser(logger, **config['advertiser'])
             scanner = Scanner(logger, **config['scanner'])
 
@@ -795,7 +795,7 @@ def main(args):
             scanner_run.join()
 
             output = advertisements
-            
+
     except Exception:
         logger.exception("Fatal exception encountered")
     finally:

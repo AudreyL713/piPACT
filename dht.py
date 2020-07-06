@@ -134,10 +134,7 @@ class DHTBase:
         # Initiate new reading if this is the first call or if sufficient delay
         # If delay not sufficient - return previous reading.
         # This allows back to back access for temperature and humidity for same reading
-        if (
-            self._last_called == 0
-            or (time.monotonic() - self._last_called) > delay_between_readings
-        ):
+        if (self._last_called == 0 or (time.monotonic() - self._last_called) > delay_between_readings):
             self._last_called = time.monotonic()
 
             new_temperature = 0
@@ -183,8 +180,7 @@ class DHTBase:
             # checksum is the last byte
             if chk_sum & 0xFF != buf[4]:
                 # check sum failed to validate
-                new_temperature = self.measure()
-                new_humidity = self.measure()
+                self.measure()
 
 
             self._temperature = new_temperature
@@ -208,7 +204,7 @@ class DHTBase:
         if self._humidity < 0 or self._humidity > 100:
             # We received unplausible data
             self.measure()
-        
+
         return self._humidity
 
 
