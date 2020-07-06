@@ -1,0 +1,27 @@
+# Configuration file for piPACT reference collection software
+
+# Settings for iBeacon advertisment
+advertiser:
+  control_file: 'advertiser_control' # Control file which stops beacon advertisement before timeout
+  timeout: 20 # Advertisement timeout (s)
+  uuid: '' # UUID, major, and minor values to advertise
+  major: 1
+  minor: 1 
+  tx_power: 1 # Tx power at which to advertise
+  interval: 200 # Interval at which advertise (ms)
+
+# Settings for beacon scanner
+scanner:
+  control_file: 'scanner_control' # Control file which stops beacon scanner before timeout
+  scan_prefix: 'pi_pact_scan' # Prefix to attach to scan output files
+  timeout: 20 # Scanning timeout (s)
+  revisit: 1 # Interval at which to scan (s)
+  filters: # Filters
+    ADDRESS:
+    RSSI:
+    
+test_scanner:
+  control_file: 'scanner_control' # Control file which stops beacon scanner before timeout
+  scan_prefix: 'pi_pact_scan' # Prefix to attach to scan output files
+  timeout: 20 # Scanning timeout (s)
+  revisit: 1 # Interval at which to scan (s)
