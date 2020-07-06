@@ -785,8 +785,8 @@ class Test_Scanner(object):
             timestamps.append(datetime.now())
 
             data = self.__service.scan(self.revisit)
-            key = list(data.keys())[0]
-            print(data[key])
+            key = list(data.keys())
+            print(key)
             weather_data = [self.__bme280.temperature, self.__bme280.humidity, self.__bme280.pressure]
             # data[key] = data[key].append(weather_data)
             # data.append(self.__bme280.temperature)
