@@ -1,8 +1,9 @@
 #!/usr/bin/python
-from time import sleep, strftime, time
+import time
 import pi_pact
 import board
 import busio
+from csv import writer
 import adafruit_bme280
 import statistics
 
@@ -16,10 +17,11 @@ bme280.overscan_pressure = adafruit_bme280.OVERSCAN_X16
 bme280.overscan_humidity = adafruit_bme280.OVERSCAN_X1
 bme280.overscan_temperature = adafruit_bme280.OVERSCAN_X2
 
-sleep(1)
+time.sleep(1)
 
 # scanner = pi_pact.Scanner_Blank(control_file_name="scanner_control")
 
+start_time = time.monotonic()
 while(True):
     temps = list()
     hums = list()
@@ -33,6 +35,13 @@ while(True):
     avg_hums = sum(hums) / len(hums)
     avg_pres = sum(pres) / len(pres)
 
-    print("Temperature: " + str(avg_temps))
-    print("Humidity: " + str(avg_hums))
-    print("Pressure: " + str(avg_pres))
+    curr_time = time.monotonic() - start_time
+    temp = "Temperature: " + str(avg_temps)
+    data_list = [curr_time, temp]
+    print(data_list)
+    # print("Temperature: " + str(avg_temps))
+    # print("Humidity: " + str(avg_hums))
+    with open("/home/aud2pact/piPACT/pact_scans/log.csv", "a+", newline='') as log:
+        csv_writer = writer(log)
+        csv_writer.writerow(data_list)
+        # log.write("{0}\n".format(strftime("%Y-%m-%d %H:%M:%S"), str(val1), str(val2), str(val3)))
