@@ -36,8 +36,7 @@ while(True):
     avg_pres = sum(pres) / len(pres)
 
     curr_time = time.monotonic() - start_time
-    temp = "Temperature: " + str(avg_temps)
-    data_list = [curr_time, temp]
+    data_list = [curr_time, avg_temps, avg_hums, avg_pres]
     print(data_list)
     # print("Temperature: " + str(avg_temps))
     # print("Humidity: " + str(avg_hums))
