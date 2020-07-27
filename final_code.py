@@ -21,10 +21,10 @@ def read_file(file_path, values):
     
     """
 
-    f1 = pd.read_csv(file_path)
+    f1 = pd.read_csv(file_path) # Use pandas to read the file
     data = []
     for v in values:
-        if v in f1:
+        if v in f1: # Only append data that can be found in the spreadsheet
             data.append(f1[v].tolist())
     return data
 
@@ -50,12 +50,17 @@ def remove_outliers(change_data, to_change, min_val, max_val):
           elements in the list are the modified iterables from to_change
     """
 
+    # Compute the series detailing which elements are outliers
     change_data = pd.Series(change_data)
     outliers = change_data.between(min_val, max_val)
     change_data = change_data[outliers].tolist()
     
     to_return = []
     to_return.append(change_data)
+
+    # Remove the same elements in each iterable in to_change
+    # to ensure that elements in the iterables in to_change 
+    # and change_data still correspond
     for i in to_change:
         i = pd.Series(i)
         i = i[outliers].tolist()
@@ -84,8 +89,10 @@ def graph_avg(x, y, pl, opacity, lbf, title=None, x_title=None, y_title=None, la
     x_lim: tuples, minimum and maximum x-values to be displayed
     y_lim: tuples, minimum and maximum x-values to be displayed    
     """
-   
-    pl.scatter(x, y, marker="o", alpha=opacity)
+
+    pl.scatter(x, y, marker="o", alpha=opacity) # Create the scatter plot
+
+    # Create a dictionary mapping each y-value to its corresponding x-values
     d1 = {}
     d1.clear
     for x1, y1 in zip(x, y):
@@ -93,6 +100,7 @@ def graph_avg(x, y, pl, opacity, lbf, title=None, x_title=None, y_title=None, la
             d1[x1] = []
         d1[x1].append(y1)
 
+    # Calculate the mean and standard deviation, graph the error bars
     x_values = list(d1.keys())
     RSSI_mean = np.array([np.mean(v) for k,v in sorted(d1.items())])
     RSSI_std = np.array([np.std(v) for k,v in sorted(d1.items())])
@@ -110,6 +118,7 @@ def graph_avg(x, y, pl, opacity, lbf, title=None, x_title=None, y_title=None, la
             xlim.append(None)
         pl.set_xlim(xlim[0], xlim[1])
     
+    # Graph a line of best fit
     if lbf:
         x = np.array(x_values)
         best_fit(x, RSSI_mean, pl)
@@ -136,7 +145,7 @@ def graph(x, y, pl, opacity, lbf, title=None, x_title=None, y_title=None, xlim=N
     y_lim: tuples, minimum and maximum x-values to be displayed    
     """
 
-    pl.scatter(x, y, marker="o", alpha=opacity)
+    pl.scatter(x, y, marker="o", alpha=opacity) # Create the scatter plot
 
     pl.set_title(title)
     pl.set_xlabel(x_title)
@@ -151,6 +160,7 @@ def graph(x, y, pl, opacity, lbf, title=None, x_title=None, y_title=None, xlim=N
         pl.set_xlim(xlim[0], xlim[1])
     pl.grid(True)
     
+    # Graph a line of best fit
     if lbf:
         best_fit(x, y, pl)
 
